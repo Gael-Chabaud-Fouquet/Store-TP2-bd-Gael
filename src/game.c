@@ -10,6 +10,7 @@
 #include "login.h"
 #include "store.h"
 
+#include "databse.h"
 
 void game_preview_player(WinRect sub_rect,GameData* g){
     #define BUMP 16 + 1 
@@ -27,6 +28,10 @@ void game_preview_player(WinRect sub_rect,GameData* g){
     }
 }
 void game_init(GameData* g){
+
+    database_start(g);
+
+    database_init_tables(g);
     InitWindow(g->win.w,g->win.h,"GoodGame™");
     SetTargetFPS(60);
 
@@ -80,6 +85,7 @@ int game_update(GameData* g){
     return 0;
 }
 void game_end(GameData* g){
+    database_end(g);
     //Unload everything that needs to be unloaded here
     // All memory that comes from allocate is freed in the entrypoint.c
     UnloadTexture(*g->img);

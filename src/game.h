@@ -89,12 +89,14 @@ typedef struct {
 } Client;
 
 typedef struct Texture Texture;
+typedef struct sqlite3 sqlite3;
 
 typedef struct {
     Game_State state;
     Client customer;
     WinRect win;
     Texture* img;
+    sqlite3* db;
     #ifdef _DEBUG
     int debug;
     #endif
