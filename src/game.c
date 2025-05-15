@@ -10,7 +10,7 @@
 #include "login.h"
 #include "store.h"
 
-#include "databse.h"
+#include "database.h"
 
 void game_preview_player(WinRect sub_rect,GameData* g){
     #define BUMP 16 + 1 

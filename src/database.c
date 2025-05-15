@@ -1,4 +1,4 @@
-#include "databse.h"
+#include "database.h"
 #include "sqlite3.h"
 #include "knob.h"
 
@@ -8,14 +8,43 @@ void database_start(GameData* g){
     sqlite3_open("game.db", &g->db);
 }
 
+
+const char* create_race_table =
+"CREATE TABLE IF NOT EXISTS Race ("
+"   RaceId INTEGER PRIMARY KEY,"
+"   racename TEXT"
+");";
+
+const char* create_character_table =
+"CREATE TABLE IF NOT EXISTS Character ("
+"   CharacterId INTEGER PRIMARY KEY,"
+"   gender INT,"// 1==male | 2==female
+"   hairtype INT,"
+"   haircolor INT,"
+"   RaceId INT,"
+"   FOREIGN KEY (RaceId) REFERENCES Race(RaceId)"
+");";
+
 const char* create_customer_table =
 "CREATE TABLE IF NOT EXISTS Customer ("
 "   CustomerId INTEGER PRIMARY KEY,"
 "   name TEXT,"
-"   email TEXT"
+"   email TEXT,"
+"   CharacterId INT,"
+"   FOREIGN KEY (CharacterId) REFERENCES Character(CharacterId)"
 ");";
 
 void database_init_tables(GameData* g) {
+    
+    if (sqlite3_exec(g->db, create_race_table, NULL, NULL, NULL) != SQLITE_OK) {
+        LOG_SQLITE3_ERROR(g->db);
+        return;
+    }
+    
+    if (sqlite3_exec(g->db, create_character_table, NULL, NULL, NULL) != SQLITE_OK) {
+        LOG_SQLITE3_ERROR(g->db);
+        return;
+    }
 
     if (sqlite3_exec(g->db, create_customer_table, NULL, NULL, NULL) != SQLITE_OK) {
         LOG_SQLITE3_ERROR(g->db);
