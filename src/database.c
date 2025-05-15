@@ -15,6 +15,12 @@ const char* create_race_table =
 "   racename TEXT"
 ");";
 
+const char* create_class_table =
+"CREATE TABLE IF NOT EXISTS Classes ("
+"   ClassId INTEGER PRIMARY KEY,"
+"   class_name TEXT"
+");";
+
 const char* create_character_table =
 "CREATE TABLE IF NOT EXISTS Character ("
 "   CharacterId INTEGER PRIMARY KEY,"
@@ -22,7 +28,9 @@ const char* create_character_table =
 "   hairtype INT,"
 "   haircolor INT,"
 "   RaceId INT,"
-"   FOREIGN KEY (RaceId) REFERENCES Race(RaceId)"
+"   ClassId INT,"
+"   FOREIGN KEY (RaceId) REFERENCES Race(RaceId),"
+"   FOREIGN KEY (ClassId) REFERENCES Classes(ClassId)"
 ");";
 
 const char* create_customer_table =
@@ -34,9 +42,15 @@ const char* create_customer_table =
 "   FOREIGN KEY (CharacterId) REFERENCES Character(CharacterId)"
 ");";
 
+
 void database_init_tables(GameData* g) {
     
     if (sqlite3_exec(g->db, create_race_table, NULL, NULL, NULL) != SQLITE_OK) {
+        LOG_SQLITE3_ERROR(g->db);
+        return;
+    }
+
+    if (sqlite3_exec(g->db, create_class_table, NULL, NULL, NULL) != SQLITE_OK) {
         LOG_SQLITE3_ERROR(g->db);
         return;
     }
