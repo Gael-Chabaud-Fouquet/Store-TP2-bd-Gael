@@ -13,6 +13,7 @@ Pour debugger le project:
 `F5`
 
 ```mermaid
+
 erDiagram
     CHARACTERS {
         int CharacterID
