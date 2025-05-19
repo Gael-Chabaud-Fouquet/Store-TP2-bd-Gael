@@ -52,3 +52,4 @@ erDiagram
     OBJECTS ||--o{ CHARACTERS : "owns"
 
     ```
+
