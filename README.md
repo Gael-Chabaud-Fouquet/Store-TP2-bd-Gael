@@ -51,5 +51,5 @@ erDiagram
     PRODUCTS ||--o{ CATEGORIES : "belongs to"
     OBJECTS ||--o{ CHARACTERS : "owns"
 
-    ```
+```
 
